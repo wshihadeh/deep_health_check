@@ -1,0 +1,20 @@
+sudo: false
+
+language: ruby
+
+rvm:
+  - 2.6.4
+
+bundler_args: --without system_tests
+
+before_install: gem install bundler -v 1.13.7
+
+script: bin/travis
+
+matrix:
+  fast_finish: true
+
+env:
+  matrix:
+    - BUILD_TYPE=rspec
+    - BUILD_TYPE=rubocop

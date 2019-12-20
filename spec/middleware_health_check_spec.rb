@@ -70,11 +70,11 @@ describe DeepHealthCheck::MiddlewareHealthCheck do
       before do
         allow(ENV).to receive(:[]).and_return(nil)
         allow(ENV).to receive(:[]).with('TCP_DEPENDENCY_00')
-          .and_return(dependencies[0])
+                                  .and_return(dependencies[0])
         allow(ENV).to receive(:[]).with('TCP_DEPENDENCY_01')
-          .and_return(dependencies[1])
+                                  .and_return(dependencies[1])
         allow(ENV).to receive(:[]).with('TCP_DEPENDENCY_02')
-          .and_return(dependencies[2])
+                                  .and_return(dependencies[2])
         allow(Net::Telnet).to receive(:new).and_return(true)
       end
       it 'will respond with 200 and up status for all dependencies' do
@@ -98,17 +98,17 @@ describe DeepHealthCheck::MiddlewareHealthCheck do
       before do
         allow(ENV).to receive(:[]).and_return(nil)
         allow(ENV).to receive(:[]).with('TCP_DEPENDENCY_00')
-          .and_return(dependencies[0])
+                                  .and_return(dependencies[0])
         allow(ENV).to receive(:[]).with('TCP_DEPENDENCY_01')
-          .and_return(dependencies[1])
+                                  .and_return(dependencies[1])
         allow(ENV).to receive(:[]).with('TCP_DEPENDENCY_02')
-          .and_return(dependencies[2])
+                                  .and_return(dependencies[2])
 
         allow(Net::Telnet).to receive(:new).and_return(true)
         allow(Net::Telnet).to receive(:new).with(hash_including(
                                                    'Host' => '127.0.0.1',
                                                    'Port' => '8089'
-        )).and_raise('boom')
+                                                 )).and_raise('boom')
       end
 
       it 'will respond with 503 and the status for each of the  dependencies' do
@@ -162,11 +162,11 @@ describe DeepHealthCheck::MiddlewareHealthCheck do
       before do
         allow(ENV).to receive(:[]).and_return(nil)
         allow(ENV).to receive(:[]).with('HTTP_DEPENDENCY_00')
-          .and_return(dependencies[0])
+                                  .and_return(dependencies[0])
         allow(ENV).to receive(:[]).with('HTTP_DEPENDENCY_01')
-          .and_return(dependencies[1])
+                                  .and_return(dependencies[1])
         allow(ENV).to receive(:[]).with('HTTP_DEPENDENCY_02')
-          .and_return(dependencies[2])
+                                  .and_return(dependencies[2])
         farady = double('farady')
         response = double('response')
 
@@ -196,11 +196,11 @@ describe DeepHealthCheck::MiddlewareHealthCheck do
       before do
         allow(ENV).to receive(:[]).and_return(nil)
         allow(ENV).to receive(:[]).with('HTTP_DEPENDENCY_00')
-          .and_return(dependencies[0])
+                                  .and_return(dependencies[0])
         allow(ENV).to receive(:[]).with('HTTP_DEPENDENCY_01')
-          .and_return(dependencies[1])
+                                  .and_return(dependencies[1])
         allow(ENV).to receive(:[]).with('HTTP_DEPENDENCY_02')
-          .and_return(dependencies[2])
+                                  .and_return(dependencies[2])
         farady = double('farady')
 
         up_response = double('up_response')
@@ -209,11 +209,11 @@ describe DeepHealthCheck::MiddlewareHealthCheck do
         allow(Faraday).to receive(:new).and_return(farady)
 
         allow(farady).to receive(:get).with(dependencies[0])
-          .and_return(up_response)
+                                      .and_return(up_response)
         allow(farady).to receive(:get).with(dependencies[1])
-          .and_return(down_response)
+                                      .and_return(down_response)
         allow(farady).to receive(:get).with(dependencies[2])
-          .and_raise('boom')
+                                      .and_raise('boom')
 
         allow(up_response).to receive(:status).and_return(200)
         allow(up_response).to receive(:body).and_return('up')

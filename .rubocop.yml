@@ -1,7 +1,8 @@
 AllCops:
   Exclude:
     - 'bin/*'
-Documentation:
+
+Style/Documentation:
     Enabled: false
 
 Metrics/BlockLength:

@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
-# coding: utf-8
-
-lib = File.expand_path('../lib', __FILE__)
+lib = File.expand_path('lib', __dir__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'deep_health_check/version'
 
@@ -13,7 +11,7 @@ Gem::Specification.new do |spec|
   spec.email         = ['shihadeh.dev@gmail.com']
 
   spec.summary       = 'Provides a health check API endpoint'
-  spec.description   = 'Provides a health check API endpoint'
+  spec.description   = 'Provides a health check API endpoint for rack apps'
   spec.homepage      = 'https://github.com/wshihadeh/deep_health_check'
   spec.license       = 'MIT'
 
@@ -24,13 +22,13 @@ Gem::Specification.new do |spec|
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ['lib']
 
-  spec.add_dependency 'net-telnet'
-  spec.add_dependency 'faraday'
-  spec.add_dependency 'faraday_middleware'
+  spec.add_dependency 'faraday', '~> 0.17'
+  spec.add_dependency 'faraday_middleware', '~> 0.13'
+  spec.add_dependency 'net-telnet', '~> 0.2'
 
   spec.add_development_dependency 'bundler', '~> 2.1'
-  spec.add_development_dependency 'rake', '~> 10.0'
-  spec.add_development_dependency 'rack-test', '~> 1.1.0'
-  spec.add_development_dependency 'rspec', '~> 3.5.0'
+  spec.add_development_dependency 'rack-test', '~> 1.1', '>= 1.1.0'
+  spec.add_development_dependency 'rake', '~> 13.0'
+  spec.add_development_dependency 'rspec', '~> 3.9', '>= 3.9.0'
   spec.add_development_dependency 'rubocop', '0.78.0'
 end

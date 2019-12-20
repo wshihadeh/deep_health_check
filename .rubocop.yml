@@ -1,0 +1,11 @@
+AllCops:
+  Exclude:
+    - 'bin/*'
+Documentation:
+    Enabled: false
+
+Metrics/BlockLength:
+  Exclude:
+    - 'Rakefile'
+    - '**/*.rake'
+    - 'spec/**/*.rb'

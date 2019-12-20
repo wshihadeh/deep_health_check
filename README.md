@@ -1,5 +1,11 @@
 # HealthCheck
 
+[![Gem Version](https://badge.fury.io/rb/rabbitmq_client.svg)](https://badge.fury.io/rb/rabbitmq_client)
+[![License](https://img.shields.io/badge/license-MIT-green.svg)](http://opensource.org/licenses/MIT)
+[![Build Status](https://travis-ci.com/wshihadeh/rabbitmq_client.svg?branch=master)](https://travis-ci.com/wshihadeh/rabbitmq_client)
+[![Depfu](https://badges.depfu.com/badges/b7ffc2788d24431bf85864706c5f9fb2/count.svg)](https://depfu.com/github/wshihadeh/rabbitmq_client?project_id=9862)
+[![Coverage](https://wshihadeh.github.io/rabbitmq_client/badges/coverage_badge_total.svg)](https://wshihadeh.github.io/rabbitmq_client/coverage_info/index.html)
+
 A simple Health status API
 
 # Getting Started

@@ -25,7 +25,7 @@ module DeepHealthCheck
       data[:db_size] = ActiveRecord::Base.connection_pool.size
       data[:db_conn_size] = ActiveRecord::Base.connection_pool.connections.size
       data
-    rescue
+    rescue StandardError
       {}
     end
 
@@ -35,7 +35,7 @@ module DeepHealthCheck
       data[:terminated_count] = Delayed::Job.where.not(failed_at: nil).count
       data[:faild_dj_count] = Delayed::Job.where(failed_at: nil)
                                           .where('attempts > 0').count
-    rescue
+    rescue StandardError
       {}
     end
   end

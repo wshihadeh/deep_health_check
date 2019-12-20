@@ -10,6 +10,7 @@ module DeepHealthCheck
 
     def call
       return no_dependencies_response if @dependencies.nil?
+
       api_health_check health_status_code, @dependencies
     end
 

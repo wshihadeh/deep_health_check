@@ -1,4 +1,10 @@
-# HealthCheck
+# DeepHealthCheck
+
+[![Gem Version](https://badge.fury.io/rb/deep_health_check.svg)](https://badge.fury.io/rb/deep_health_check)
+[![License](https://img.shields.io/badge/license-MIT-green.svg)](http://opensource.org/licenses/MIT)
+[![Build Status](https://travis-ci.org/wshihadeh/deep_health_check.svg?branch=master)](https://travis-ci.org/wshihadeh/deep_health_check)
+[![Depfu](https://badges.depfu.com/badges/b29d275b0743e77163a813ac51251be9/count.svg)](https://depfu.com/github/wshihadeh/deep_health_check?project_id=10389)
+
 
 A simple Health status API
 

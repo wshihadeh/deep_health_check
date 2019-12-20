@@ -32,7 +32,17 @@ Health check middleware expose the following endpoints
   - /health
   - /db_health
   - /tcp_dependencies_health
+      + dependencies must follow the below format and can be coonfigured using envioronment varables such as:
+       ```sh
+       # TCP_DEPENDENCY_${00..99}=${ip_or_host}:${port}
+       TCP_DEPENDENCY_00=127.0.0.0:8080
+       ```
   - /http_dependencies_health
+      + dependencies must be valid http url and can be coonfigured using envioronment varables such as:
+       ```sh
+       # HTTP_DEPENDENCY_${00..99}=${ip_or_host}:${port}
+       HTTP_DEPENDENCY_00=http://127.0.0.0:8080/health
+       ```
 
 Some of these endpoints provide information about the database and system status. By Default these endpoints are not protected and are accessible publicly. To reduce the security risk introduced by exposing these endpoints, We can protect them using htauth credentials. The following page provide all the necessary steps needed to achieve this task.
 

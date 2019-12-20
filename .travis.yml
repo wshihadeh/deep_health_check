@@ -7,8 +7,6 @@ rvm:
 
 bundler_args: --without system_tests
 
-before_install: gem install bundler -v 1.13.7
-
 script: bin/travis
 
 matrix:

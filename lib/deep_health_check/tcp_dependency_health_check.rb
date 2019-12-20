@@ -35,8 +35,9 @@ module DeepHealthCheck
         'Telnetmode' => false,
         'Prompt' => /^\+OK/n
       )
+
       down
-    rescue
+    rescue StandardError
       down
     end
 

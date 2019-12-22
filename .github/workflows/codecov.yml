@@ -1,0 +1,34 @@
+name: Codecov
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    name: Run rspec to generate code coverage
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@master
+    - name: Set up Ruby 2.6
+      uses: actions/setup-ruby@v1
+      with:
+        version: 2.6.x
+
+    - name: Run test cases
+      run: |
+        bundle exec rspec
+      env:
+        CODECOV_TOKEN: ${{secrets.CODECOV_TOKEN}}
+
+    - name: Slack notification Success
+      if: success()
+      env:
+        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+      uses: cemkiy/action-slacker@master
+      with:
+        channel: '#github-ci-actions'
+        icon_url: 'https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png'
+        username: 'GitHub'

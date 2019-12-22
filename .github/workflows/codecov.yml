@@ -19,6 +19,8 @@ jobs:
 
     - name: Run test cases
       run: |
+        gem install bundler
+        bundle install
         bundle exec rspec
       env:
         CODECOV_TOKEN: ${{secrets.CODECOV_TOKEN}}

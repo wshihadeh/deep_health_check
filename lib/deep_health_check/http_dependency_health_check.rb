@@ -1,10 +1,12 @@
 # frozen_string_literal: true
 
 require 'faraday'
-require 'faraday_middleware'
 
 module DeepHealthCheck
   class HTTPDependencyHealthCheck < DependencyHealthCheck
+    CONTENT_TYPE    = 'Content-Type'
+    JSON_MIME_TYPE  = 'application/json'
+
     def initialize
       @type = 'http'
       @dependencies = process_dependencies fetch_dependencies_from_env
@@ -32,14 +34,23 @@ module DeepHealthCheck
 
     def http_status(url)
       response = faraday.get url
-      { status: response.status, details: response.body }
+      response_body = extract_response_body response
+      { status: response.status, details: response_body }
     rescue RuntimeError, Faraday::Error => e
       { status: nil, details: e.inspect }
     end
 
+    def extract_response_body(response)
+      unless response.headers[CONTENT_TYPE] == JSON_MIME_TYPE
+        return response.body
+      end
+
+      require 'json' unless defined?(::JSON)
+      JSON.parse(response.body)
+    end
+
     def faraday
       Faraday.new do |builder|
-        builder.response :json, content_type: /\bjson$/
         builder.response(:encoding) if defined?(Faraday::Encoding)
         builder.adapter Faraday.default_adapter
       end

@@ -174,6 +174,7 @@ describe DeepHealthCheck::MiddlewareHealthCheck do
         allow(farady).to receive(:get).and_return(response)
         allow(response).to receive(:status).and_return(200)
         allow(response).to receive(:body).and_return('up')
+        allow(response).to receive(:headers).and_return({})
       end
 
       it 'will respond with 200 and up status for all dependencies' do
@@ -190,6 +191,54 @@ describe DeepHealthCheck::MiddlewareHealthCheck do
         expect(attributes.size).to eq 3
         expect(attributes.keys).to eq dependencies
         expect(attributes.values.uniq).to eq [up]
+      end
+    end
+
+    context 'all checks are green with json response' do
+      let(:check_respose) do
+        { 'data' => {
+          'attributes' => { 'message' => 'OK' },
+          'id' => '1',
+          'type' => 'checker'
+        } }
+      end
+      before do
+        allow(ENV).to receive(:[]).and_return(nil)
+        allow(ENV).to receive(:[]).with('HTTP_DEPENDENCY_00')
+                                  .and_return(dependencies[0])
+        allow(ENV).to receive(:[]).with('HTTP_DEPENDENCY_01')
+                                  .and_return(dependencies[1])
+        allow(ENV).to receive(:[]).with('HTTP_DEPENDENCY_02')
+                                  .and_return(dependencies[2])
+        farady = double('farady')
+        response = double('response')
+
+        allow(Faraday).to receive(:new).and_return(farady)
+        allow(farady).to receive(:get).and_return(response)
+        allow(response).to receive(:status).and_return(200)
+        allow(response).to receive(:body).and_return(check_respose.to_json)
+        allow(response).to receive(:headers).and_return(
+          'Content-Type' => 'application/json'
+        )
+      end
+
+      it 'will respond with 200 and up status for all dependencies' do
+        code, env, body = middleware.call env_for('/http_dependencies_health')
+        json_response = JSON.parse(body.first)
+
+        expect(code).to eq(200)
+        expect(env['Content-Type']).to eq('application/json')
+        expect(json_response).to be_a Hash
+        expect(json_response['data']).to be_a Hash
+        expect(json_response['data']['type']).to eq 'checker'
+
+        attributes = json_response['data']['attributes']
+        expect(attributes.size).to eq 3
+        expect(attributes.keys).to eq dependencies
+        expect(attributes.values.uniq).to eq [{
+          'details' => check_respose,
+          'status' => 200
+        }]
       end
     end
     context 'some checks are down' do
@@ -217,8 +266,10 @@ describe DeepHealthCheck::MiddlewareHealthCheck do
 
         allow(up_response).to receive(:status).and_return(200)
         allow(up_response).to receive(:body).and_return('up')
+        allow(up_response).to receive(:headers).and_return({})
         allow(down_response).to receive(:status).and_return(503)
         allow(down_response).to receive(:body).and_return('down')
+        allow(down_response).to receive(:headers).and_return({})
       end
 
       it 'will respond with 503 and the status for each of the  dependencies' do

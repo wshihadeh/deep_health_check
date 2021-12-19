@@ -289,7 +289,7 @@ describe DeepHealthCheck::MiddlewareHealthCheck do
         expect(attributes[dependencies[0]]).to eq(up)
         expect(attributes[dependencies[1]]).to eq(down)
         expect(attributes[dependencies[2]]).to eq(
-          'status' => nil,
+          'status' => 503,
           'details' => '#<RuntimeError: boom>'
         )
       end

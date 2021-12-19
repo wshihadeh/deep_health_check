@@ -25,19 +25,12 @@ module DeepHealthCheck
       threads.map(&:value).reduce(&:merge)
     end
 
-    def health_status_code
-      failed = @dependencies.any? do |_name, response|
-        !response[:status] || response[:status] >= 300
-      end
-      failed ? 503 : 200
-    end
-
     def http_status(url)
       response = faraday.get url
       response_body = extract_response_body response
       { status: response.status, details: response_body }
     rescue RuntimeError, Faraday::Error => e
-      { status: nil, details: e.inspect }
+      { status: 503, details: e.inspect }
     end
 
     def extract_response_body(response)

@@ -11,14 +11,10 @@ module DeepHealthCheck
     def call
       return no_dependencies_response if @dependencies.nil?
 
-      api_health_check health_status_code, @dependencies
+      api_health_check 200, @dependencies
     end
 
     private
-
-    def health_status_code
-      raise 'health_status_code need to implmented'
-    end
 
     def no_dependencies_response
       api_health_check 200, 'message': "No #{@type.upcase} dependencies defined"

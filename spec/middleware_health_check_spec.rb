@@ -111,11 +111,11 @@ describe DeepHealthCheck::MiddlewareHealthCheck do
                                                  )).and_raise('boom')
       end
 
-      it 'will respond with 503 and the status for each of the  dependencies' do
+      it 'will respond with 200 and the status for each of the  dependencies' do
         code, env, body = middleware.call env_for('/tcp_dependencies_health')
         json_response = JSON.parse(body.first)
 
-        expect(code).to eq(503)
+        expect(code).to eq(200)
         expect(env['Content-Type']).to eq('application/json')
         expect(json_response).to be_a Hash
         expect(json_response['data']).to be_a Hash
@@ -140,7 +140,7 @@ describe DeepHealthCheck::MiddlewareHealthCheck do
       ]
     end
     let(:up) { { 'status' => 200, 'details' => 'up' } }
-    let(:down) { { 'status' => 503, 'details' => 'down' } }
+    let(:down) { { 'status' => 200, 'details' => 'down' } }
 
     context 'No depemndecies configured' do
       it 'will respond with No dependencies defined ' do
@@ -267,16 +267,16 @@ describe DeepHealthCheck::MiddlewareHealthCheck do
         allow(up_response).to receive(:status).and_return(200)
         allow(up_response).to receive(:body).and_return('up')
         allow(up_response).to receive(:headers).and_return({})
-        allow(down_response).to receive(:status).and_return(503)
+        allow(down_response).to receive(:status).and_return(200)
         allow(down_response).to receive(:body).and_return('down')
         allow(down_response).to receive(:headers).and_return({})
       end
 
-      it 'will respond with 503 and the status for each of the  dependencies' do
+      it 'will respond with 200 and the status for each of the  dependencies' do
         code, env, body = middleware.call env_for('/http_dependencies_health')
         json_response = JSON.parse(body.first)
 
-        expect(code).to eq(503)
+        expect(code).to eq(200)
         expect(env['Content-Type']).to eq('application/json')
         expect(json_response).to be_a Hash
         expect(json_response['data']).to be_a Hash

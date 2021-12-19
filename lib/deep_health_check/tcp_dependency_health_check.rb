@@ -23,11 +23,6 @@ module DeepHealthCheck
       threads.map(&:value).reduce(&:merge)
     end
 
-    def health_status_code
-      faild_count = @dependencies.select { |_k, v| v == down }.count
-      faild_count.zero? ? 200 : 503
-    end
-
     def tcp_telnet_status(host, port)
       return up if Net::Telnet.new(
         'Host' => host,

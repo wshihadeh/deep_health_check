@@ -8,6 +8,7 @@ require 'deep_health_check/tcp_dependency_health_check'
 require 'deep_health_check/http_dependency_health_check'
 require 'deep_health_check/health_check_builder'
 require 'deep_health_check/middleware_health_check'
+require 'deep_health_check/basic_auth_health_check'
 
 module DeepHealthCheck
 end

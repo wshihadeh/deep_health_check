@@ -25,7 +25,14 @@ if other middleware fails when database is down for example ActiveRecord::QueryC
  config.middleware.insert_after "Rails::Rack::Logger", DeepHealthCheck::MiddlewareHealthCheck
 ~~~
 
+Or for protecting all endpoits with hatauth 
 
+~~~sh
+# config/application.rb
+config.middleware.use DeepHealthCheck::BasicAuthHealthCheck  do |username, password|
+  username == "$USER" && password == "$PASS"
+end
+~~~
 
 
 # Protect Health Check endpoints using htauth credentials.
@@ -45,6 +52,6 @@ Health check middleware expose the following endpoints
        HTTP_DEPENDENCY_00=http://127.0.0.0:8080/health
        ```
 
-Some of these endpoints provide information about the database and system status. By Default these endpoints are not protected and are accessible publicly. To reduce the security risk introduced by exposing these endpoints, We can protect them using htauth credentials. The following page provide all the necessary steps needed to achieve this task.
+Some of these endpoints provide information about the database and system status. By Default these endpoints are not protected and are accessible publicly. To reduce the security risk introduced by exposing these endpoints, We can protect them using htauth credentials. The following page provide all the necessary steps needed to achieve this task using nginx.
 
 [Nginx Configurations](NGINX.md)

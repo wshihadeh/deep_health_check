@@ -2,6 +2,6 @@
 
 describe DeepHealthCheck do
   it 'should have the correct version' do
-    expect(DeepHealthCheck::VERSION).to eq('0.0.3')
+    expect(DeepHealthCheck::VERSION).to eq('0.0.4')
   end
 end

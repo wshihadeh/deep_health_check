@@ -30,5 +30,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'rack-test', '~> 1.1', '>= 1.1.0'
   spec.add_development_dependency 'rake', '~> 13.0'
   spec.add_development_dependency 'rspec', '~> 3.9', '>= 3.9.0'
-  spec.add_development_dependency 'rubocop', '1.24.0'
+  spec.add_development_dependency 'rubocop', '1.32.0'
 end
